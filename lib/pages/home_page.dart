@@ -15,10 +15,16 @@ class HomePage extends StatelessWidget {
         Scaffold(
           body: HomeTab(),
           drawer: CustomDrawer(_pageController),
+          floatingActionButton: FloatingActionButton(
+            onPressed: (){},
+            child: Icon(Icons.shopping_cart, color: Colors.white,),
+            elevation: 10.0,
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
         ),
         Scaffold(
           appBar: AppBar(
-            title: Text('Produtos'),
+            title: Text('Produtos'), 
             centerTitle: true,
           ),
           drawer: CustomDrawer(_pageController),
