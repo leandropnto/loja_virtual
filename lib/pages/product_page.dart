@@ -99,6 +99,37 @@ class _ProductPageState extends State<ProductPage> {
                     }).toList(),
                   ),
                 ),
+                SizedBox(
+                  height: 14.0,
+                ),
+                SizedBox(
+                  height: 44.0,
+                  child: RaisedButton(
+                    color: primaryColor,
+                    onPressed: productSize != null ? () {} : null,
+                    child: Text(
+                      'Adicionar ao carrinho',
+                      style: TextStyle(fontSize: 18.0, color: Colors.white),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                Text(
+                  'Descrição',
+                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 5.0),
+                  child: Text(
+                    product.description,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
               ],
             ),
           )
