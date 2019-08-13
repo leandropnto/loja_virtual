@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:loja_virtual/pages/login_page.dart';
 import 'package:loja_virtual/tiles/drawer_tiles.dart';
 
 class CustomDrawer extends StatelessWidget {
-  final  PageController pageController;
+  final PageController pageController;
 
   CustomDrawer(this.pageController);
   @override
@@ -57,7 +58,8 @@ class CustomDrawer extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                             ),
                             onTap: () {
-                              print("Clicou no item drawer");
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => LoginPage()));
                             },
                           ),
                         ],
@@ -70,7 +72,8 @@ class CustomDrawer extends StatelessWidget {
               DrawerTile(Icons.home, 'Início', pageController, 0),
               DrawerTile(Icons.list, 'Produtos', pageController, 1),
               DrawerTile(Icons.location_on, 'Lojas', pageController, 2),
-              DrawerTile(Icons.playlist_add_check, 'Meus Pedidos', pageController, 3),
+              DrawerTile(
+                  Icons.playlist_add_check, 'Meus Pedidos', pageController, 3),
             ],
           ),
         ],
