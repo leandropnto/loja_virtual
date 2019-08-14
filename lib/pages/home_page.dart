@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/tabs/category_tab.dart';
 import 'package:loja_virtual/tabs/home_tab.dart';
+import 'package:loja_virtual/widgets/cart_button.dart';
 import 'package:loja_virtual/widgets/custom_drawer.dart';
 
 class HomePage extends StatelessWidget {
@@ -15,12 +16,7 @@ class HomePage extends StatelessWidget {
         Scaffold(
           body: HomeTab(),
           drawer: CustomDrawer(_pageController),
-          floatingActionButton: FloatingActionButton(
-            onPressed: (){},
-            child: Icon(Icons.shopping_cart, color: Colors.white,),
-            elevation: 10.0,
-            backgroundColor: Theme.of(context).primaryColor,
-          ),
+          floatingActionButton: CartButton(),
         ),
         Scaffold(
           appBar: AppBar(
