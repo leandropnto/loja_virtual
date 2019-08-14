@@ -8,6 +8,8 @@ class CartProduct {
   int quantity;
   String size;
 
+  CartProduct();
+
   ProductData productData;
 
   CartProduct.fromDocument(DocumentSnapshot document) {
@@ -24,7 +26,7 @@ class CartProduct {
       "quantity": quantity,
       "pid": pid,
       "size": size,
-      "product": productData.toResumeMap()
+      //"product": productData.toResumeMap()
     };
   }
 }
