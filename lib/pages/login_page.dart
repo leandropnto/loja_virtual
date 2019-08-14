@@ -84,7 +84,14 @@ class _LoginPageState extends State<LoginPage> {
                       textAlign: TextAlign.right,
                     ),
                     padding: EdgeInsets.zero,
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_emailController.text.isEmpty){
+                        showMessage(message: "Insira seu email para recuperação");
+                      } else {
+                        showMessage(message: 'Confira seu email', color: Theme.of(context).primaryColor);
+                        model.recoverPass(email: _emailController.text);
+                      }
+                    },
                   ),
                 ),
                 SizedBox(
@@ -123,9 +130,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onFailure() {
+    showMessage(message: "Login ou senha inválidos! Por favor, tente novamente");
+  }
+
+  void showMessage({@required String message, Color color}) {
     _scaffoldKey.currentState.showSnackBar(SnackBar(
-      content: Text("Login ou senha inválidos! Por favor, tente novamente"),
-      backgroundColor: Colors.redAccent,
+      content: Text(message),
+      backgroundColor: color != null ? color : Colors.redAccent,
       duration: Duration(seconds: 2),
     ));
   }
