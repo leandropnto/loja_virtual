@@ -3,12 +3,24 @@ import 'package:loja_virtual/models/user_model.dart';
 import 'package:loja_virtual/pages/signup_page.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final _emailController = TextEditingController();
+
+  final _passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Acessar Loja'),
         centerTitle: true,
@@ -29,7 +41,9 @@ class LoginPage extends StatelessWidget {
       body: ScopedModelDescendant<UserModel>(
         builder: (context, child, model) {
           if (model.isLoading)
-          return Center(child: CircularProgressIndicator(),);
+            return Center(
+              child: CircularProgressIndicator(),
+            );
 
           return Form(
             key: _formKey,
@@ -37,6 +51,7 @@ class LoginPage extends StatelessWidget {
               padding: EdgeInsets.all(16.0),
               children: <Widget>[
                 TextFormField(
+                  controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(hintText: 'E-mail'),
                   validator: (text) {
@@ -51,6 +66,7 @@ class LoginPage extends StatelessWidget {
                   height: 16.0,
                 ),
                 TextFormField(
+                    controller: _passController,
                     decoration: InputDecoration(hintText: 'Senha'),
                     obscureText: true,
                     validator: (text) {
@@ -84,9 +100,13 @@ class LoginPage extends StatelessWidget {
                     textColor: Colors.white,
                     color: Theme.of(context).primaryColor,
                     onPressed: () {
-                      if (_formKey.currentState.validate()) {}
-
-                      model.signIn();
+                      if (_formKey.currentState.validate()) {
+                        model.signIn(
+                            email: _emailController.text,
+                            pass: _passController.text,
+                            onSuccess: _onSuccess,
+                            onFailure: _onFailure);
+                      }
                     },
                   ),
                 )
@@ -96,5 +116,17 @@ class LoginPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _onSuccess() {
+    Navigator.of(context).pop();
+  }
+
+  void _onFailure() {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text("Login ou senha inválidos! Por favor, tente novamente"),
+      backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
+    ));
   }
 }
