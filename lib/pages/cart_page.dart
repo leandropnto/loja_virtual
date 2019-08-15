@@ -25,6 +25,11 @@ class CartScreen extends StatelessWidget {
           ),
         ],
       ),
+      body: ScopedModelDescendant<CartModel>(
+        builder: (context, child, model){
+          return Container();
+        },
+      ),
     );
   }
 }
