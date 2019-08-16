@@ -34,7 +34,15 @@ class DiscountCard extends StatelessWidget {
                     },
                     invalidCoupon: () {
                       Scaffold.of(context).showSnackBar(SnackBar(
-                        content: Text('Cupom inválido'),
+                        content: Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(Icons.error, color: Colors.white, size: 30),
+                            ), 
+                            Text('Cupom inválido'),
+                          ],
+                        ),
                         backgroundColor: Colors.redAccent
                       ));
                       return;
