@@ -8,12 +8,14 @@ class CartModel extends Model {
   UserModel user;
   List<CartProduct> products = [];
   bool isLoading = false;
+  String couponCode;
+  int discountPercentage = 0;
 
   static CartModel of(BuildContext context) {
     return ScopedModel.of<CartModel>(context);
   }
 
-  CartModel({this.user}){
+  CartModel({this.user}) {
     if (user.isLoggedIn()) {
       _loadCartItens();
     }
@@ -74,8 +76,29 @@ class CartModel extends Model {
         .collection('cart')
         .getDocuments();
 
-    products = querySnapshot.documents.map((doc) => CartProduct.fromDocument(doc)).toList();
+    products = querySnapshot.documents
+        .map((doc) => CartProduct.fromDocument(doc))
+        .toList();
 
     notifyListeners();
+  }
+
+  void applyDiscount(
+      {String coupon,
+      VoidCallback validCoupon(int desconto),
+      VoidCallback invalidCoupon}) async {
+    var documentSnapshot =
+        await Firestore.instance.collection('coupons').document(coupon).get();
+    if (documentSnapshot.data != null) {
+      final int percentage = documentSnapshot.data['percent'];
+      this.couponCode = coupon;
+      this.discountPercentage = percentage;
+      validCoupon(percentage);
+    } else {
+      this.couponCode = null;
+      this.discountPercentage = 0;
+      invalidCoupon();
+
+    }
   }
 }

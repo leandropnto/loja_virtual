@@ -3,6 +3,7 @@ import 'package:loja_virtual/models/cart_model.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:loja_virtual/pages/login_page.dart';
 import 'package:loja_virtual/tiles/cart_tile.dart';
+import 'package:loja_virtual/widgets/discount_card.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class CartScreen extends StatelessWidget {
@@ -76,7 +77,11 @@ class CartScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Icon(Icons.remove_shopping_cart, size: 80, color: Theme.of(context).primaryColor,),
+                Icon(
+                  Icons.remove_shopping_cart,
+                  size: 80,
+                  color: Theme.of(context).primaryColor,
+                ),
                 Text(
                   'Nenhum produto no carrinho',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -87,12 +92,16 @@ class CartScreen extends StatelessWidget {
           );
         } else {
           return ListView(
-            children: model.products.map( (product) {
-              return CartTile(product);
-            }).toList(),
+            children: <Widget>[
+              Column(
+                children: model.products.map((product) {
+                  return CartTile(product);
+                }).toList(),
+              ),
+              DiscountCard(),
+            ],
           );
         }
-      
       }),
     );
   }
