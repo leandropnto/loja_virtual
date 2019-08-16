@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/datas/cart_product.dart';
 import 'package:loja_virtual/datas/product_data.dart';
+import 'package:loja_virtual/models/cart_model.dart';
 
 class CartTile extends StatelessWidget {
   final CartProduct cartProduct;
@@ -14,6 +15,9 @@ class CartTile extends StatelessWidget {
 
     final priceStyle = TextStyle(
         color: primaryColor, fontSize: 16, fontWeight: FontWeight.bold);
+
+    final subTotalStyle = TextStyle(
+        color: primaryColor, fontSize: 14, fontWeight: FontWeight.w500);
 
     final TextStyle titleStyle =
         TextStyle(fontWeight: FontWeight.w500, fontSize: 17);
@@ -43,9 +47,18 @@ class CartTile extends StatelessWidget {
                       style: titleStyle,
                     ),
                     Text("Tamanho: ${cartProduct.size}", style: sizeStyle),
-                    Text(
-                      "R\$ ${cartProduct.productData.price.toStringAsFixed(2)}",
-                      style: priceStyle,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "R\$ ${cartProduct.productData.price.toStringAsFixed(2)}",
+                          style: priceStyle,
+                        ),
+                        Text(
+                          "Subtotal: R\$ ${(cartProduct.productData.price * cartProduct.quantity).toStringAsFixed(2)}",
+                          style: subTotalStyle,
+                        ),
+                      ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -55,7 +68,9 @@ class CartTile extends StatelessWidget {
                             Icons.remove,
                             color: primaryColor,
                           ),
-                          onPressed: cartProduct.quantity > 1 ? () {} : null,
+                          onPressed: cartProduct.quantity > 1 ? () {
+                            CartModel.of(context).decProduct(cartProduct);
+                          } : null,
                         ),
                         Text(cartProduct.quantity.toString()),
                         IconButton(
@@ -63,12 +78,17 @@ class CartTile extends StatelessWidget {
                             Icons.add,
                             color: primaryColor,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            CartModel.of(context).incProduct(cartProduct);
+                          },
                         ),
                         FlatButton(
                           child: Text('Remover'),
                           textColor: Colors.grey[500],
-                          onPressed: () {},
+                          onPressed: () {
+                            CartModel.of(context).removeCartItem(cartProduct);
+                            
+                          },
                         )
                       ],
                     )
