@@ -101,4 +101,22 @@ class CartModel extends Model {
 
     }
   }
+
+  double getProductsPrice() {
+    return  products.where( (product) => product.productData != null)
+      .fold( 0.0 , (total, product) => total + product.quantity * product.productData.price ) ?? 0.0;
+  }
+
+  double getShipPrice(){
+    return 9.99;
+  }
+
+  double getDiscount(){
+    return getProductsPrice() * discountPercentage / 100;
+  }
+
+  void updatePrices() {
+    notifyListeners();
+  }
+
 }

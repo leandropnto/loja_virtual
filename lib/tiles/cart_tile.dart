@@ -25,6 +25,9 @@ class CartTile extends StatelessWidget {
     final TextStyle sizeStyle = TextStyle(fontWeight: FontWeight.w300);
 
     Widget _buildContent() {
+
+      CartModel.of(context).updatePrices();
+      
       return Row(
         children: <Widget>[
           Container(

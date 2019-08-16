@@ -103,7 +103,7 @@ class CartScreen extends StatelessWidget {
               DiscountCard(),
               ShipCard(),
               CartPrice((){
-                
+                print(model.getProductsPrice());
               }),
             ],
           );
