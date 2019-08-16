@@ -7,6 +7,7 @@ import 'package:scoped_model/scoped_model.dart';
 class CartModel extends Model {
   UserModel user;
   List<CartProduct> products = [];
+  
   bool isLoading = false;
   String couponCode;
   int discountPercentage = 0;
@@ -119,4 +120,11 @@ class CartModel extends Model {
     notifyListeners();
   }
 
+  void finishOrder() {
+    if (products.length == 0) return;
+
+    isLoading = true;
+    notifyListeners();
+
+  }
 }
