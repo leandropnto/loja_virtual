@@ -108,4 +108,20 @@ class UserModel extends Model {
       }
     }
   }
+
+  Future<QuerySnapshot> loadOrders() async {
+    final uid = firebaseUser.uid;
+    return Firestore.instance
+        .collection('users')
+        .document(uid)
+        .collection('orders')
+        .getDocuments();
+  }
+
+  Stream<DocumentSnapshot> loadOrder(String orderId) {
+    return  Firestore.instance
+        .collection('orders')
+        .document(orderId)
+        .snapshots();
+  }
 }
