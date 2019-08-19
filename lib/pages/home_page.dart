@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:loja_virtual/tabs/category_tab.dart';
 import 'package:loja_virtual/tabs/home_tab.dart';
 import 'package:loja_virtual/tabs/orders_tab.dart';
+import 'package:loja_virtual/tabs/shoppings_tab.dart';
 import 'package:loja_virtual/widgets/cart_button.dart';
 import 'package:loja_virtual/widgets/custom_drawer.dart';
 
@@ -27,7 +28,14 @@ class HomePage extends StatelessWidget {
           drawer: CustomDrawer(_pageController),
           body: CategoryTab(),
         ),
-        Container(color: Colors.green),
+        Scaffold(
+          appBar: AppBar(
+            title: Text('Lojas'),
+            centerTitle: true,
+          ),
+          body: ShoppingsTab(),
+          drawer: CustomDrawer(_pageController),
+        ),
         Scaffold(
           appBar: AppBar(
             title: Text('Meus Pedidos'),
